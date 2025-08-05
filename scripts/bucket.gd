@@ -5,7 +5,7 @@ extends RigidBody2D
 @onready var pickup_area: Area2D = $PickupArea
 
 var invuln_frames: int = 1
-var BUCKET_RETURN_FORCE = 50.0
+var BUCKET_RETURN_FORCE = 10.0
 func _physics_process(delta: float) -> void:
 	if invuln_frames:
 		invuln_frames -= 1

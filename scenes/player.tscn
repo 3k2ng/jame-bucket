@@ -3,6 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://x82m30vdmo83" path="res://icon.svg" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://degk58c8w57h2" path="res://scripts/player.gd" id="1_g2els"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qhqgy"]
+radius = 32.0
+height = 90.0
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_g2els"]
 animations = [{
 "frames": [{
@@ -14,10 +18,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qhqgy"]
-radius = 32.0
-height = 90.0
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g2els"]
 radius = 33.0
 height = 66.0
@@ -25,11 +25,6 @@ height = 66.0
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_g2els")
-
-[node name="OffAnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, 12)
-scale = Vector2(0.515625, 0.515625)
-sprite_frames = SubResource("SpriteFrames_g2els")
 
 [node name="OnCollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_qhqgy")
@@ -39,14 +34,19 @@ position = Vector2(0, -12)
 scale = Vector2(0.515625, 0.515625)
 sprite_frames = SubResource("SpriteFrames_g2els")
 
-[node name="Icon" type="Sprite2D" parent="OnAnimatedSprite2D"]
+[node name="Icon" type="Sprite2D" parent="."]
 modulate = Color(0.608931, 0.383061, 0.316014, 1)
-position = Vector2(0, 87.2727)
-scale = Vector2(0.296875, 0.296875)
+position = Vector2(0, 33)
+scale = Vector2(0.153076, 0.153076)
 texture = ExtResource("1_3vyb7")
 
 [node name="OffCollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 12)
 shape = SubResource("CapsuleShape2D_g2els")
+
+[node name="OffAnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 12)
+scale = Vector2(0.515625, 0.515625)
+sprite_frames = SubResource("SpriteFrames_g2els")
 
 [node name="Camera2D" type="Camera2D" parent="."]

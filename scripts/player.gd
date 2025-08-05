@@ -37,13 +37,15 @@ func handle_input(delta: float) -> void:
 
 	if Input.is_action_just_pressed("kick") and state == State.ON_BUCKET and not is_on_wall():
 		kick_bucket()
-		
 
+	if Input.is_action_just_pressed("jump") and state == State.ON_BUCKET and not is_on_floor():
+		double_jump()
+		velocity.y = BUCKET_JUMP_VELOCITY
 
-const BUCKET_MAX_SPEED = 500.0
-const ACCEL = 1000.0
+const BUCKET_MAX_SPEED = 600.0
+const ACCEL = 800.0
 const BUCKET_JUMP_VELOCITY = -320.0
-const BUCKET_GRAVITY = Vector2(0.0, 700.0)
+const BUCKET_GRAVITY = Vector2(0.0, 800.0)
 func handle_on_bucket(delta: float) -> void:
 	if not is_on_floor():
 		velocity += BUCKET_GRAVITY * delta
@@ -83,6 +85,14 @@ func kick_bucket() -> void:
 	if input_vector == Vector2.ZERO: new_bucket.linear_velocity.x = facing * BUCKET_FORCE
 	else: new_bucket.linear_velocity = input_vector * BUCKET_FORCE
 	new_bucket.position = position + Vector2(facing * BUCKET_SPAWN_OFFSET, 0.0)
+	get_parent().add_child(new_bucket)
+	update_state(State.OFF_BUCKET)
+
+func double_jump() -> void:
+	if state == State.OFF_BUCKET: return
+	var new_bucket = BUCKET.instantiate()
+	new_bucket.linear_velocity = Vector2(sign(velocity.x) * 200.0, BUCKET_FORCE)
+	new_bucket.position = position + Vector2(0.0, 10.0)
 	get_parent().add_child(new_bucket)
 	update_state(State.OFF_BUCKET)
 
