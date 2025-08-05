@@ -5,8 +5,6 @@ enum State {
 }
 var state: State
 
-signal suck
-
 var facing: int = 1
 
 var input_vector = Vector2(0, 0)
@@ -40,8 +38,6 @@ func handle_input(delta: float) -> void:
 	if Input.is_action_just_pressed("kick") and state == State.ON_BUCKET and not is_on_wall():
 		kick_bucket()
 		
-	if Input.is_action_just_pressed("suck") and state == State.OFF_BUCKET:
-		suck.emit(self)
 
 
 const BUCKET_MAX_SPEED = 500.0
@@ -84,7 +80,6 @@ var BUCKET_SPAWN_OFFSET = 0.0
 func kick_bucket() -> void:
 	if state == State.OFF_BUCKET: return
 	var new_bucket = BUCKET.instantiate()
-	self.suck.connect(new_bucket._on_player_suck)
 	if input_vector == Vector2.ZERO: new_bucket.linear_velocity.x = facing * BUCKET_FORCE
 	else: new_bucket.linear_velocity = input_vector * BUCKET_FORCE
 	new_bucket.position = position + Vector2(facing * BUCKET_SPAWN_OFFSET, 0.0)
