@@ -7,6 +7,8 @@ var state: State
 
 var facing: int = 1
 
+var input_vector = Vector2(0, 0)
+
 @onready var on_animated_sprite_2d: AnimatedSprite2D = $OnAnimatedSprite2D
 @onready var on_collision_shape_2d: CollisionShape2D = $OnCollisionShape2D
 @onready var off_animated_sprite_2d: AnimatedSprite2D = $OffAnimatedSprite2D
@@ -14,7 +16,7 @@ var facing: int = 1
 
 func _ready() -> void:
 	update_state(State.OFF_BUCKET)
-
+	
 
 func _physics_process(delta: float) -> void:
 	match state:
@@ -31,13 +33,15 @@ func _physics_process(delta: float) -> void:
 func handle_input(delta: float) -> void:
 	var direction := Input.get_axis("left", "right")
 	facing = sign(direction) if sign(direction) else facing
+	input_vector = Input.get_vector("left", "right", "up", "down")
 
 	if Input.is_action_just_pressed("kick") and state == State.ON_BUCKET and not is_on_wall():
 		kick_bucket()
+		
 
 
 const BUCKET_MAX_SPEED = 500.0
-const ACCEL = 600.0
+const ACCEL = 1000.0
 const BUCKET_JUMP_VELOCITY = -320.0
 const BUCKET_GRAVITY = Vector2(0.0, 700.0)
 func handle_on_bucket(delta: float) -> void:
@@ -76,7 +80,8 @@ var BUCKET_SPAWN_OFFSET = 0.0
 func kick_bucket() -> void:
 	if state == State.OFF_BUCKET: return
 	var new_bucket = BUCKET.instantiate()
-	new_bucket.linear_velocity = Vector2(facing * BUCKET_FORCE, velocity.y * BUCKET_Y_FORCE - BUCKET_Y_BASE)
+	if input_vector == Vector2.ZERO: new_bucket.linear_velocity.x = facing * BUCKET_FORCE
+	else: new_bucket.linear_velocity = input_vector * BUCKET_FORCE
 	new_bucket.position = position + Vector2(facing * BUCKET_SPAWN_OFFSET, 0.0)
 	get_parent().add_child(new_bucket)
 	update_state(State.OFF_BUCKET)
