@@ -21,3 +21,10 @@ func _on_body_entered(body: Node2D) -> void:
 		icon.modulate = Color.GREEN
 		body.equip_bucket()
 		queue_free()
+
+func _on_player_suck(body: Node2D) -> void:
+	if body.is_in_group("player") and invuln_frames <= 0:
+		print("suck acquired")
+		icon.modulate = Color.GREEN
+		body.equip_bucket()
+		queue_free()

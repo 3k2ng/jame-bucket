@@ -51,3 +51,5 @@ position = Vector2(-67, -71)
 [node name="Bucket" parent="." instance=ExtResource("3_w8frs")]
 position = Vector2(54, -253)
 linear_velocity = Vector2(41.985, 0)
+
+[connection signal="suck" from="Player" to="Bucket" method="_on_player_suck"]
