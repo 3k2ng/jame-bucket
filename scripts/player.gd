@@ -41,7 +41,6 @@ func handle_input(delta: float) -> void:
 		kick_bucket()
 		
 	if Input.is_action_just_pressed("suck") and state == State.OFF_BUCKET:
-		print("suck sent")
 		suck.emit(self)
 
 
