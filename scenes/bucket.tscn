@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://y7t23oijdij"]
+
+[ext_resource type="Texture2D" uid="uid://x82m30vdmo83" path="res://icon.svg" id="1_ojsi1"]
+[ext_resource type="Script" uid="uid://cyogwueild81v" path="res://scripts/bucket.gd" id="2_4mj0c"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ojsi1"]
+friction = 71.45
+rough = true
+bounce = 0.61
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qcheq"]
+radius = 21.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ojsi1"]
+radius = 37.0135
+
+[node name="Bucket" type="RigidBody2D"]
+collision_layer = 2
+physics_material_override = SubResource("PhysicsMaterial_ojsi1")
+script = ExtResource("2_4mj0c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_qcheq")
+
+[node name="Icon" type="Sprite2D" parent="."]
+modulate = Color(0.608931, 0.383061, 0.316014, 1)
+scale = Vector2(0.296875, 0.296875)
+texture = ExtResource("1_ojsi1")
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+shape = SubResource("CircleShape2D_ojsi1")
+
+[connection signal="body_entered" from="PickupArea" to="." method="_on_body_entered"]
