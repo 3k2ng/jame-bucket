@@ -32,7 +32,7 @@ func handle_input(delta: float) -> void:
 	var direction := Input.get_axis("left", "right")
 	facing = sign(direction) if sign(direction) else facing
 
-	if Input.is_action_just_pressed("kick") and state == State.ON_BUCKET:
+	if Input.is_action_just_pressed("kick") and state == State.ON_BUCKET and not is_on_wall():
 		kick_bucket()
 
 
@@ -70,11 +70,13 @@ func handle_off_bucket(delta: float) -> void:
 
 const BUCKET = preload("res://scenes/bucket.tscn")
 var BUCKET_FORCE = 1500.0
+var BUCKET_Y_FORCE = 1.5
+var BUCKET_Y_BASE = 50.0
 var BUCKET_SPAWN_OFFSET = 0.0
 func kick_bucket() -> void:
 	if state == State.OFF_BUCKET: return
 	var new_bucket = BUCKET.instantiate()
-	new_bucket.linear_velocity.x = facing * BUCKET_FORCE
+	new_bucket.linear_velocity = Vector2(facing * BUCKET_FORCE, velocity.y * BUCKET_Y_FORCE - BUCKET_Y_BASE)
 	new_bucket.position = position + Vector2(facing * BUCKET_SPAWN_OFFSET, 0.0)
 	get_parent().add_child(new_bucket)
 	update_state(State.OFF_BUCKET)
