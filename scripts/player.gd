@@ -100,6 +100,7 @@ func double_jump() -> void:
 
 func equip_bucket() -> void:
 	update_state(State.ON_BUCKET)
+	bucket_sprite_2d.rotation = 0.0
 
 func update_state(new_state: State) -> void:
 	state = new_state
@@ -109,11 +110,30 @@ func update_state(new_state: State) -> void:
 
 @onready var bucket_sprite_2d: Sprite2D = $BucketSprite2D
 
+var WALK_FPS_OFF = 8.0
+var WALK_FPS_SLOW = 6.0
+var WALK_FPS_MED = 9.0
+var WALK_FPS_FAST = 12.0
 var BUCKET_SPRITE_ROTATE_SPEED = 0.03
 func handle_sprite(delta: float) -> void:
 	sprite.flip_h = facing < 0.0
-	if velocity.x:
+	sprite.speed_scale = 1.0
+	if not is_on_floor():
+		if velocity.y < 0.0:
+			sprite.play("jump")
+		else:
+			sprite.play("fall")
+	elif velocity.x:
 		sprite.play("run")
+		if state == State.OFF_BUCKET:
+			sprite.speed_scale = WALK_FPS_OFF
+		elif abs(velocity.x) > 550.0:
+			sprite.speed_scale = WALK_FPS_FAST
+		elif abs(velocity.x) > 350.0:
+			sprite.speed_scale = WALK_FPS_MED
+		else:
+			sprite.speed_scale = WALK_FPS_SLOW
+		print(velocity.x)
 	else:
 		sprite.play("idle")
 	if state == State.ON_BUCKET:
