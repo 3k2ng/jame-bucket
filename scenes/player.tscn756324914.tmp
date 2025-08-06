@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bvgwjxmvpxviq" path="res://assets/wizard.png" id="2_qhqgy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qhqgy"]
-radius = 21.0
+radius = 32.0
 height = 90.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
@@ -57,7 +57,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g2els"]
-radius = 21.0
+radius = 33.0
 height = 66.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
@@ -67,18 +67,18 @@ script = ExtResource("1_g2els")
 [node name="OnCollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_qhqgy")
 
-[node name="BucketSprite2D" type="Sprite2D" parent="."]
-modulate = Color(0.608931, 0.383061, 0.316014, 1)
-position = Vector2(0, 26)
-scale = Vector2(0.296875, 0.296875)
-texture = ExtResource("1_3vyb7")
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, 11)
+position = Vector2(0, 9)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_g2els")
 animation = &"run"
 autoplay = "idle"
+
+[node name="Icon" type="Sprite2D" parent="."]
+modulate = Color(0.608931, 0.383061, 0.316014, 1)
+position = Vector2(0, 26)
+scale = Vector2(0.296875, 0.296875)
+texture = ExtResource("1_3vyb7")
 
 [node name="OffCollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 12)

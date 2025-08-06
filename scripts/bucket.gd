@@ -16,7 +16,11 @@ func _physics_process(delta: float) -> void:
 		pickup_area.monitoring = true
 
 	var player = get_tree().get_first_node_in_group("player")
-	if Input.is_action_pressed("suck"): linear_velocity += (player.position - position) / BUCKET_RETURN_FORCE
+	if Input.is_action_pressed("suck"):
+		linear_velocity += (player.position - position) * BUCKET_RETURN_FORCE * delta
+		#collision_shape_2d.disabled = true
+	#else:
+		#collision_shape_2d.disabled = false
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and invuln_frames <= 0:

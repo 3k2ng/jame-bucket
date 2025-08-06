@@ -6,12 +6,12 @@ enum State {
 var state: State
 
 var facing: int = 1
+var direction: float
+var input_vector: Vector2
 
-var input_vector = Vector2(0, 0)
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
-@onready var on_animated_sprite_2d: AnimatedSprite2D = $OnAnimatedSprite2D
 @onready var on_collision_shape_2d: CollisionShape2D = $OnCollisionShape2D
-@onready var off_animated_sprite_2d: AnimatedSprite2D = $OffAnimatedSprite2D
 @onready var off_collision_shape_2d: CollisionShape2D = $OffCollisionShape2D
 
 func _ready() -> void:
@@ -27,11 +27,13 @@ func _physics_process(delta: float) -> void:
 
 	handle_input(delta)
 
+	handle_sprite(delta)
+
 	move_and_slide()
 
 
 func handle_input(delta: float) -> void:
-	var direction := Input.get_axis("left", "right")
+	direction = Input.get_axis("left", "right")
 	facing = sign(direction) if sign(direction) else facing
 	input_vector = Input.get_vector("left", "right", "up", "down")
 
@@ -55,8 +57,7 @@ func handle_on_bucket(delta: float) -> void:
 	if Input.is_action_just_released("jump") and not is_on_floor():
 		velocity.y = max(velocity.y, 0.0)
 
-	var direction := Input.get_axis("left", "right")
-	velocity.x = move_toward(velocity.x, (direction if direction else 0.0) * BUCKET_MAX_SPEED, ACCEL * delta)
+	velocity.x = move_toward(velocity.x, (direction if direction else 0.0) * BUCKET_MAX_SPEED, ACCEL * delta * (10.0 if sign(direction) != sign(velocity.x) else 1.0))
 
 const MAX_SPEED = 200.0
 const JUMP_VELOCITY = -200.0
@@ -70,8 +71,9 @@ func handle_off_bucket(delta: float) -> void:
 	if Input.is_action_just_released("jump") and not is_on_floor():
 		velocity.y = max(velocity.y, 0.0)
 
-	var direction := Input.get_axis("left", "right")
-	velocity.x = (direction if direction else 0.0) * MAX_SPEED
+	if abs(velocity.x) > MAX_SPEED:
+		velocity.x = move_toward(velocity.x, MAX_SPEED * (direction if direction else 0.0), ACCEL * delta)
+	else: velocity.x = MAX_SPEED * (direction if direction else 0.0)
 
 
 const BUCKET = preload("res://scenes/bucket.tscn")
@@ -91,7 +93,7 @@ func kick_bucket() -> void:
 func double_jump() -> void:
 	if state == State.OFF_BUCKET: return
 	var new_bucket = BUCKET.instantiate()
-	new_bucket.linear_velocity = Vector2(sign(velocity.x) * 200.0, BUCKET_FORCE)
+	new_bucket.linear_velocity = Vector2(sign(velocity.x) * 800.0, BUCKET_FORCE)
 	new_bucket.position = position + Vector2(0.0, 10.0)
 	get_parent().add_child(new_bucket)
 	update_state(State.OFF_BUCKET)
@@ -101,7 +103,21 @@ func equip_bucket() -> void:
 
 func update_state(new_state: State) -> void:
 	state = new_state
-	on_animated_sprite_2d.visible = state == State.ON_BUCKET
 	on_collision_shape_2d.disabled = not state == State.ON_BUCKET
-	off_animated_sprite_2d.visible = not state == State.ON_BUCKET
 	off_collision_shape_2d.disabled = state == State.ON_BUCKET
+	bucket_sprite_2d.visible = state == State.ON_BUCKET
+
+@onready var bucket_sprite_2d: Sprite2D = $BucketSprite2D
+
+var BUCKET_SPRITE_ROTATE_SPEED = 0.03
+func handle_sprite(delta: float) -> void:
+	sprite.flip_h = facing < 0.0
+	if velocity.x:
+		sprite.play("run")
+	else:
+		sprite.play("idle")
+	if state == State.ON_BUCKET:
+		sprite.position = Vector2(0.0, -26.0)
+	else:
+		sprite.position = Vector2(0.0, 11.0)
+	bucket_sprite_2d.rotate(velocity.x * BUCKET_SPRITE_ROTATE_SPEED * delta)

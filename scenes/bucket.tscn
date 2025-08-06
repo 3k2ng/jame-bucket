@@ -6,7 +6,7 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ojsi1"]
 friction = 71.45
 rough = true
-bounce = 0.61
+bounce = 0.4
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qcheq"]
 radius = 21.0
