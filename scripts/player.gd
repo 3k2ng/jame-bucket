@@ -104,8 +104,8 @@ func equip_bucket() -> void:
 
 func update_state(new_state: State) -> void:
 	state = new_state
-	on_collision_shape_2d.disabled = not state == State.ON_BUCKET
-	off_collision_shape_2d.disabled = state == State.ON_BUCKET
+	on_collision_shape_2d.set_deferred("disabled", not state == State.ON_BUCKET)
+	off_collision_shape_2d.set_deferred("disabled", state == State.ON_BUCKET)
 	bucket_sprite_2d.visible = state == State.ON_BUCKET
 
 @onready var bucket_sprite_2d: Sprite2D = $BucketSprite2D
@@ -133,7 +133,6 @@ func handle_sprite(delta: float) -> void:
 			sprite.speed_scale = WALK_FPS_MED
 		else:
 			sprite.speed_scale = WALK_FPS_SLOW
-		print(velocity.x)
 	else:
 		sprite.play("idle")
 	if state == State.ON_BUCKET:

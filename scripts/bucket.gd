@@ -4,6 +4,10 @@ extends RigidBody2D
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var pickup_area: Area2D = $PickupArea
 
+@onready var player = get_tree().get_first_node_in_group("player")
+
+var damage: int = 5
+
 var invuln_frames: int = 1
 var BUCKET_RETURN_FORCE = 10.0
 func _physics_process(delta: float) -> void:
@@ -15,7 +19,6 @@ func _physics_process(delta: float) -> void:
 	else:
 		pickup_area.monitoring = true
 
-	var player = get_tree().get_first_node_in_group("player")
 	if Input.is_action_pressed("suck"):
 		linear_velocity += (player.position - position) * BUCKET_RETURN_FORCE * delta
 		#collision_shape_2d.disabled = true
@@ -26,3 +29,6 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and invuln_frames <= 0:
 		body.equip_bucket()
 		queue_free()
+	elif body.is_in_group("enemy"):
+		body.take_damage(self, damage)
+		linear_velocity = (player.position - position).normalized() * linear_velocity.length()

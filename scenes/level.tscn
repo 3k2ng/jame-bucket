@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://gi16ijfiadbp"]
+[gd_scene load_steps=6 format=3 uid="uid://gi16ijfiadbp"]
 
 [ext_resource type="Texture2D" uid="uid://x82m30vdmo83" path="res://icon.svg" id="1_2q6dc"]
 [ext_resource type="PackedScene" uid="uid://xq87myo26y5s" path="res://scenes/player.tscn" id="2_w7c3h"]
 [ext_resource type="PackedScene" uid="uid://y7t23oijdij" path="res://scenes/bucket.tscn" id="3_w8frs"]
+[ext_resource type="PackedScene" uid="uid://dowixos6x5gas" path="res://scenes/enemy.tscn" id="4_mx8sn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w7c3h"]
 size = Vector2(1552, 130)
@@ -51,3 +52,12 @@ position = Vector2(-67, -71)
 [node name="Bucket" parent="." instance=ExtResource("3_w8frs")]
 position = Vector2(54, -253)
 linear_velocity = Vector2(41.985, 0)
+
+[node name="Enemy" parent="." instance=ExtResource("4_mx8sn")]
+position = Vector2(-1200, -283)
+
+[node name="Enemy2" parent="." instance=ExtResource("4_mx8sn")]
+position = Vector2(1128, -623)
+
+[node name="Enemy3" parent="." instance=ExtResource("4_mx8sn")]
+position = Vector2(360, -75)

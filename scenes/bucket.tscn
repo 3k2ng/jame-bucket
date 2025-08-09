@@ -12,7 +12,7 @@ bounce = 0.4
 radius = 21.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ojsi1"]
-radius = 21.0238
+radius = 25.0
 
 [node name="Bucket" type="RigidBody2D"]
 collision_layer = 2
