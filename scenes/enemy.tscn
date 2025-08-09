@@ -1,13 +1,63 @@
-[gd_scene load_steps=5 format=3 uid="uid://dowixos6x5gas"]
+[gd_scene load_steps=12 format=3 uid="uid://dowixos6x5gas"]
 
 [ext_resource type="Script" uid="uid://dpi1a584fchit" path="res://scripts/enemy.gd" id="1_md0e3"]
-[ext_resource type="Texture2D" uid="uid://x82m30vdmo83" path="res://icon.svg" id="2_4ra3w"]
+[ext_resource type="Texture2D" uid="uid://cyrcgs2uq5v85" path="res://assets/Kings and Pigs/03-Pig/Run (34x28).png" id="2_md0e3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5uy6h"]
 size = Vector2(44, 44)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_md0e3"]
 size = Vector2(50, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ra3w"]
+atlas = ExtResource("2_md0e3")
+region = Rect2(0, 0, 34, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5uy6h"]
+atlas = ExtResource("2_md0e3")
+region = Rect2(34, 0, 34, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c4w8v"]
+atlas = ExtResource("2_md0e3")
+region = Rect2(68, 0, 34, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xwavj"]
+atlas = ExtResource("2_md0e3")
+region = Rect2(102, 0, 34, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nenq2"]
+atlas = ExtResource("2_md0e3")
+region = Rect2(136, 0, 34, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_md484"]
+atlas = ExtResource("2_md0e3")
+region = Rect2(170, 0, 34, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ipns3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ra3w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5uy6h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c4w8v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xwavj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nenq2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_md484")
+}],
+"loop": true,
+"name": &"run",
+"speed": 8.0
+}]
 
 [node name="Enemy" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 2
@@ -16,11 +66,17 @@ script = ExtResource("1_md0e3")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_5uy6h")
 
-[node name="Icon" type="Sprite2D" parent="."]
-scale = Vector2(0.34375, 0.34375)
-texture = ExtResource("2_4ra3w")
-
 [node name="Hitbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("RectangleShape2D_md0e3")
+
+[node name="SpriteOrigin" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SpriteOrigin"]
+position = Vector2(-7, -11)
+scale = Vector2(2.42857, 2.42857)
+sprite_frames = SubResource("SpriteFrames_ipns3")
+animation = &"run"
+autoplay = "run"
+frame_progress = 0.579827
