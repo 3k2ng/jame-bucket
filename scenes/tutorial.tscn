@@ -1,0 +1,204 @@
+[gd_scene load_steps=20 format=3 uid="uid://bkydppkf7ye8s"]
+
+[ext_resource type="Texture2D" uid="uid://t4doe08ejxnd" path="res://assets/Pixel Adventure/Background/Brown.png" id="1_c13y7"]
+[ext_resource type="Script" uid="uid://b5b0f0dimvbxg" path="res://scripts/start_button.gd" id="2_4kmhl"]
+[ext_resource type="Texture2D" uid="uid://bl4bwv2c4qdjs" path="res://assets/bucket.png" id="2_ph3nu"]
+[ext_resource type="Texture2D" uid="uid://bvgwjxmvpxviq" path="res://assets/wizard.png" id="3_4kmhl"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_c13y7"]
+font_size = 116
+font_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 0.435294)
+shadow_offset = Vector2(-8.37, 8.4)
+
+[sub_resource type="LabelSettings" id="LabelSettings_8ho6b"]
+font_size = 42
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ph3nu"]
+font_size = 27
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j3v7k"]
+atlas = ExtResource("2_ph3nu")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ox4ou"]
+atlas = ExtResource("2_ph3nu")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cq4me"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j3v7k")
+}],
+"loop": true,
+"name": &"air",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ox4ou")
+}],
+"loop": true,
+"name": &"roll",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
+atlas = ExtResource("3_4kmhl")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
+atlas = ExtResource("3_4kmhl")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qlg0r"]
+atlas = ExtResource("3_4kmhl")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tuyoq"]
+atlas = ExtResource("3_4kmhl")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fjrip"]
+atlas = ExtResource("3_4kmhl")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
+atlas = ExtResource("3_4kmhl")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ur7pv"]
+atlas = ExtResource("3_4kmhl")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4r1p"]
+atlas = ExtResource("3_4kmhl")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6yjpi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qhqgy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqkch")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qlg0r")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tuyoq")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fjrip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smehm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ur7pv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4r1p")
+}],
+"loop": true,
+"name": &"run",
+"speed": 1.0
+}]
+
+[node name="Tutorial" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Parallax2D" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.5, 0.5)
+repeat_size = Vector2(64, 64)
+autoscroll = Vector2(0, 50)
+repeat_times = 44
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D"]
+texture = ExtResource("1_c13y7")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Wizard Bucket!"
+label_settings = SubResource("LabelSettings_c13y7")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "(unfinished)"
+label_settings = SubResource("LabelSettings_8ho6b")
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+text = "This is a game where you are a wizard and you get to ride a bucket like a skateboard and do bucket kickflips. (But, it's actually not a game because we didn't have time to design any levels.) So, just play around with the movement system and have fun! (WASD to move, LMB to kick/retrieve bucket)"
+label_settings = SubResource("LabelSettings_ph3nu")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="FlowContainer" type="FlowContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Button" type="Button" parent="HBoxContainer/VBoxContainer/FlowContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 71
+text = "Start!"
+script = ExtResource("2_4kmhl")
+
+[node name="BucketSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1028, 548)
+scale = Vector2(1.4375, 1.4375)
+sprite_frames = SubResource("SpriteFrames_cq4me")
+animation = &"roll"
+autoplay = "air"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(102, 540)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_6yjpi")
+animation = &"run"
+autoplay = "idle"
+
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/FlowContainer/Button" to="HBoxContainer/VBoxContainer/FlowContainer/Button" method="_on_pressed"]

@@ -33,11 +33,8 @@ func _physics_process(delta: float) -> void:
 	else:
 		animated_sprite_2d.play("air")
 
-	if Input.is_action_pressed("suck"):
+	if Global.suck_bucket and Input.is_action_pressed("suck"):
 		linear_velocity += (player.position - position).normalized() * BUCKET_RETURN_FORCE * delta
-		#collision_shape_2d.disabled = true
-	#else:
-		#collision_shape_2d.disabled = false
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and invuln_frames <= 0:

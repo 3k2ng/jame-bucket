@@ -16,12 +16,11 @@ var input_vector: Vector2
 
 func _ready() -> void:
 	update_state(State.OFF_BUCKET)
-	
+	# obv get rid of these later
+	Global.double_jump = true
+	Global.suck_bucket = true
 
 func _physics_process(delta: float) -> void:
-	if Input.is_action_just_pressed("escape"):
-		get_tree().quit(0)
-
 	match state:
 		State.ON_BUCKET:
 			handle_on_bucket(delta)
@@ -47,7 +46,7 @@ func handle_input(delta: float) -> void:
 	if Input.is_action_just_pressed("kick") and state == State.ON_BUCKET:
 		kick_bucket()
 
-	if Input.is_action_just_pressed("jump") and state == State.ON_BUCKET and not is_on_floor():
+	if Global.double_jump and Input.is_action_just_pressed("jump") and state == State.ON_BUCKET and not is_on_floor():
 		double_jump()
 		velocity.y = DOUBLE_JUMP_VELOCITY
 

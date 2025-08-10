@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="jamebucket"
-run/main_scene="uid://gi16ijfiadbp"
+run/main_scene="uid://bkydppkf7ye8s"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Global="*res://scenes/global.tscn"
 
 [display]
 
