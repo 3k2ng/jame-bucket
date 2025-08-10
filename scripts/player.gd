@@ -19,6 +19,9 @@ func _ready() -> void:
 	
 
 func _physics_process(delta: float) -> void:
+	if Input.is_action_just_pressed("escape"):
+		get_tree().quit(0)
+
 	match state:
 		State.ON_BUCKET:
 			handle_on_bucket(delta)
@@ -37,7 +40,7 @@ func handle_input(delta: float) -> void:
 	facing = sign(direction) if sign(direction) else facing
 	input_vector = Input.get_vector("left", "right", "up", "down")
 
-	if Input.is_action_just_pressed("kick") and state == State.ON_BUCKET and not is_on_wall():
+	if Input.is_action_just_pressed("kick") and state == State.ON_BUCKET:
 		kick_bucket()
 
 	if Input.is_action_just_pressed("jump") and state == State.ON_BUCKET and not is_on_floor():
@@ -46,11 +49,10 @@ func handle_input(delta: float) -> void:
 
 const BUCKET_MAX_SPEED = 600.0
 const ACCEL = 800.0
-const BUCKET_JUMP_VELOCITY = -320.0
-const BUCKET_GRAVITY = Vector2(0.0, 800.0)
+const BUCKET_JUMP_VELOCITY = -480.0
 func handle_on_bucket(delta: float) -> void:
 	if not is_on_floor():
-		velocity += BUCKET_GRAVITY * delta
+		velocity += get_gravity() * delta
 
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = BUCKET_JUMP_VELOCITY
@@ -77,7 +79,7 @@ func handle_off_bucket(delta: float) -> void:
 
 
 const BUCKET = preload("res://scenes/bucket.tscn")
-var BUCKET_FORCE = 1500.0
+var BUCKET_FORCE = 1200.0
 var BUCKET_Y_FORCE = 1.5
 var BUCKET_Y_BASE = 50.0
 var BUCKET_SPAWN_OFFSET = 0.0
@@ -108,35 +110,51 @@ func update_state(new_state: State) -> void:
 	off_collision_shape_2d.set_deferred("disabled", state == State.ON_BUCKET)
 	bucket_sprite_2d.visible = state == State.ON_BUCKET
 
-@onready var bucket_sprite_2d: Sprite2D = $BucketSprite2D
+@onready var bucket_sprite_2d: AnimatedSprite2D = $BucketSprite2D
 
 var WALK_FPS_OFF = 8.0
 var WALK_FPS_SLOW = 6.0
 var WALK_FPS_MED = 9.0
 var WALK_FPS_FAST = 12.0
-var BUCKET_SPRITE_ROTATE_SPEED = 0.03
+var BUCKET_ROTATE_AIR = 10.0
+var BUCKET_ROTATE_ROLL = 0.03
+var bucket_angle: float = 0.0
+var bucket_rotation_dir: int
+
 func handle_sprite(delta: float) -> void:
 	sprite.flip_h = facing < 0.0
 	sprite.speed_scale = 1.0
 	if not is_on_floor():
+		bucket_sprite_2d.play("air")
+		if not bucket_rotation_dir:
+			bucket_rotation_dir = signi(velocity.x)
+			if not bucket_rotation_dir:
+				bucket_rotation_dir = 1
+		bucket_angle += bucket_rotation_dir * BUCKET_ROTATE_AIR * delta
 		if velocity.y < 0.0:
 			sprite.play("jump")
 		else:
 			sprite.play("fall")
-	elif velocity.x:
-		sprite.play("run")
-		if state == State.OFF_BUCKET:
-			sprite.speed_scale = WALK_FPS_OFF
-		elif abs(velocity.x) > 550.0:
-			sprite.speed_scale = WALK_FPS_FAST
-		elif abs(velocity.x) > 350.0:
-			sprite.speed_scale = WALK_FPS_MED
-		else:
-			sprite.speed_scale = WALK_FPS_SLOW
 	else:
-		sprite.play("idle")
+		bucket_rotation_dir = 0
+		bucket_sprite_2d.play("roll")
+		if velocity.x:
+			bucket_angle += velocity.x * BUCKET_ROTATE_ROLL * delta
+			sprite.play("run")
+			if state == State.OFF_BUCKET:
+				sprite.speed_scale = WALK_FPS_OFF
+			elif abs(velocity.x) > 550.0:
+				sprite.speed_scale = WALK_FPS_FAST
+			elif abs(velocity.x) > 350.0:
+				sprite.speed_scale = WALK_FPS_MED
+			else:
+				sprite.speed_scale = WALK_FPS_SLOW
+		else:
+			sprite.play("idle")
+
 	if state == State.ON_BUCKET:
 		sprite.position = Vector2(0.0, -26.0)
 	else:
 		sprite.position = Vector2(0.0, 11.0)
-	bucket_sprite_2d.rotate(velocity.x * BUCKET_SPRITE_ROTATE_SPEED * delta)
+
+	bucket_sprite_2d.rotation = bucket_angle

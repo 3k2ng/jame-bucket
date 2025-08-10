@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://y7t23oijdij"]
+[gd_scene load_steps=9 format=3 uid="uid://y7t23oijdij"]
 
-[ext_resource type="Texture2D" uid="uid://x82m30vdmo83" path="res://icon.svg" id="1_ojsi1"]
 [ext_resource type="Script" uid="uid://cyogwueild81v" path="res://scripts/bucket.gd" id="2_4mj0c"]
+[ext_resource type="Texture2D" uid="uid://bl4bwv2c4qdjs" path="res://assets/bucket.png" id="2_axt1m"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ojsi1"]
 friction = 71.45
@@ -14,23 +14,54 @@ radius = 21.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_ojsi1"]
 radius = 25.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_j3v7k"]
+atlas = ExtResource("2_axt1m")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ox4ou"]
+atlas = ExtResource("2_axt1m")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4mj0c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j3v7k")
+}],
+"loop": true,
+"name": &"air",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ox4ou")
+}],
+"loop": true,
+"name": &"roll",
+"speed": 5.0
+}]
+
 [node name="Bucket" type="RigidBody2D"]
 collision_layer = 2
 physics_material_override = SubResource("PhysicsMaterial_ojsi1")
+inertia = 10.0
+contact_monitor = true
+max_contacts_reported = 1
 script = ExtResource("2_4mj0c")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_qcheq")
-
-[node name="Icon" type="Sprite2D" parent="."]
-modulate = Color(0.608931, 0.383061, 0.316014, 1)
-scale = Vector2(0.296875, 0.296875)
-texture = ExtResource("1_ojsi1")
 
 [node name="PickupArea" type="Area2D" parent="."]
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
 shape = SubResource("CircleShape2D_ojsi1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1.61696, 1.61696)
+sprite_frames = SubResource("SpriteFrames_4mj0c")
+animation = &"roll"
+autoplay = "air"
 
 [connection signal="body_entered" from="PickupArea" to="." method="_on_body_entered"]
