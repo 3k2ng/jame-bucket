@@ -1,0 +1,161 @@
+[gd_scene load_steps=17 format=3 uid="uid://c8dollnb2s8ex"]
+
+[ext_resource type="Texture2D" uid="uid://t4doe08ejxnd" path="res://assets/Pixel Adventure/Background/Brown.png" id="1_akuhd"]
+[ext_resource type="Texture2D" uid="uid://bl4bwv2c4qdjs" path="res://assets/bucket.png" id="3_v5rvx"]
+[ext_resource type="Texture2D" uid="uid://bvgwjxmvpxviq" path="res://assets/wizard.png" id="4_uind8"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_c13y7"]
+font_size = 116
+font_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 0.435294)
+shadow_offset = Vector2(-8.37, 8.4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j3v7k"]
+atlas = ExtResource("3_v5rvx")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ox4ou"]
+atlas = ExtResource("3_v5rvx")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cq4me"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j3v7k")
+}],
+"loop": true,
+"name": &"air",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ox4ou")
+}],
+"loop": true,
+"name": &"roll",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
+atlas = ExtResource("4_uind8")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
+atlas = ExtResource("4_uind8")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qlg0r"]
+atlas = ExtResource("4_uind8")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tuyoq"]
+atlas = ExtResource("4_uind8")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fjrip"]
+atlas = ExtResource("4_uind8")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
+atlas = ExtResource("4_uind8")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ur7pv"]
+atlas = ExtResource("4_uind8")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4r1p"]
+atlas = ExtResource("4_uind8")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6yjpi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qhqgy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqkch")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qlg0r")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tuyoq")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fjrip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smehm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ur7pv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4r1p")
+}],
+"loop": true,
+"name": &"run",
+"speed": 1.0
+}]
+
+[node name="Tutorial" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Parallax2D" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.5, 0.5)
+repeat_size = Vector2(64, 64)
+autoscroll = Vector2(0, 50)
+repeat_times = 100
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D"]
+texture = ExtResource("1_akuhd")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+offset_left = 159.0
+offset_top = 823.0
+offset_right = 995.0
+offset_bottom = 981.0
+size_flags_horizontal = 4
+text = "Wizard Bucket!"
+label_settings = SubResource("LabelSettings_c13y7")
+horizontal_alignment = 1
+
+[node name="BucketSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(750, 1200)
+rotation = 0.140756
+scale = Vector2(8.68392, 8.68392)
+sprite_frames = SubResource("SpriteFrames_cq4me")
+animation = &"air"
+autoplay = "air"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(380, 1171)
+rotation = -0.0693083
+scale = Vector2(15.625, 15.625)
+sprite_frames = SubResource("SpriteFrames_6yjpi")
+animation = &"fall"
+autoplay = "idle"
