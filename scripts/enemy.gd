@@ -51,7 +51,6 @@ const Y_KNOCKBACK = -300.0
 const X_VARIANCE = 50.0
 const Y_VARIANCE = 10.0
 func take_damage(bucket: RigidBody2D, damage: int) -> void:
-	if hurt_frames > 0: return
 	# Knockback
 	var dir_knockback = sign(position.x - player.position.x)
 	velocity = Vector2(dir_knockback * X_KNOCKBACK, Y_KNOCKBACK)

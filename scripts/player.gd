@@ -35,6 +35,10 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
+const BUCKET_MAX_SPEED = 600.0
+const ACCEL = 800.0
+const BUCKET_JUMP_VELOCITY = -400.0
+const DOUBLE_JUMP_VELOCITY = -350.0
 func handle_input(delta: float) -> void:
 	direction = Input.get_axis("left", "right")
 	facing = sign(direction) if sign(direction) else facing
@@ -45,11 +49,8 @@ func handle_input(delta: float) -> void:
 
 	if Input.is_action_just_pressed("jump") and state == State.ON_BUCKET and not is_on_floor():
 		double_jump()
-		velocity.y = BUCKET_JUMP_VELOCITY
+		velocity.y = DOUBLE_JUMP_VELOCITY
 
-const BUCKET_MAX_SPEED = 600.0
-const ACCEL = 800.0
-const BUCKET_JUMP_VELOCITY = -480.0
 func handle_on_bucket(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta

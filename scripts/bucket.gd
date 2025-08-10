@@ -43,6 +43,6 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and invuln_frames <= 0:
 		body.equip_bucket()
 		queue_free()
-	elif body.is_in_group("enemy") and body.health > 0:
+	elif body.is_in_group("enemy") and body.health > 0 and body.hurt_frames <= 0 and linear_velocity.length() > 300.0:
 		body.take_damage(self, damage)
 		linear_velocity = (player.position - position).normalized() * linear_velocity.length()
