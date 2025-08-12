@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://xq87myo26y5s" path="res://scenes/objects/player.tscn" id="3_ouxo3"]
 [ext_resource type="PackedScene" uid="uid://y7t23oijdij" path="res://scenes/objects/bucket.tscn" id="4_icy5c"]
 [ext_resource type="PackedScene" uid="uid://dowixos6x5gas" path="res://scenes/objects/enemy.tscn" id="5_rmjfq"]
-[ext_resource type="AudioStream" uid="uid://cfobtq2wjdnva" path="res://audio/music/vampire galleovania.mp3" id="6_7pb6i"]
+[ext_resource type="AudioStream" uid="uid://bxdl51qaq4lgw" path="res://audio/music/bucket song.mp3" id="6_d4w6o"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ppgk2"]
 texture = ExtResource("2_mbbpy")
@@ -344,6 +344,6 @@ position = Vector2(1128, -623)
 position = Vector2(360, -75)
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_7pb6i")
-volume_db = -13.745
+stream = ExtResource("6_d4w6o")
+volume_db = -5.245
 autoplay = true

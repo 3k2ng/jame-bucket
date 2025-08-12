@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bl4bwv2c4qdjs" path="res://assets/bucket.png" id="3_qhqgy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qhqgy"]
-radius = 21.0
+radius = 24.0
 height = 106.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j3v7k"]
@@ -115,7 +115,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g2els"]
-radius = 21.0
+radius = 24.0
 height = 66.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]

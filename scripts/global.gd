@@ -1,8 +1,11 @@
 extends Node
 
 var suck_bucket := false
-var double_jump := false
 var magic_missile := false
+var homing_bucket := false
+
+var double_jump := false
+var dash := false
 
 #@export_category("Levels")
 @export var levels: Array[PackedScene]

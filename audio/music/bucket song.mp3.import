@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bxdl51qaq4lgw"
+path="res://.godot/imported/bucket song.mp3-61f0ba1203af9176b8c596eba449e714.mp3str"
+
+[deps]
+
+source_file="res://audio/music/bucket song.mp3"
+dest_files=["res://.godot/imported/bucket song.mp3-61f0ba1203af9176b8c596eba449e714.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=165.0
+beat_count=192
+bar_beats=4

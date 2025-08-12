@@ -50,6 +50,8 @@ func handle_input(delta: float) -> void:
 		double_jump()
 		velocity.y = DOUBLE_JUMP_VELOCITY
 
+const BUCKET_TURN_AROUND = 3.0
+const BUCKET_DASH_FORCE = 1000.0
 func handle_on_bucket(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -59,7 +61,12 @@ func handle_on_bucket(delta: float) -> void:
 	if Input.is_action_just_released("jump") and not is_on_floor():
 		velocity.y = max(velocity.y, 0.0)
 
-	velocity.x = move_toward(velocity.x, (direction if direction else 0.0) * BUCKET_MAX_SPEED, ACCEL * delta * (10.0 if sign(direction) != sign(velocity.x) else 1.0))
+	var v_to = (direction if direction else 0.0) * BUCKET_MAX_SPEED
+	var v_delta = ACCEL * delta * (BUCKET_TURN_AROUND if sign(direction) != sign(velocity.x) else 1.0)
+	velocity.x = move_toward(velocity.x, v_to, v_delta)
+
+	if Input.is_action_just_pressed("dash"):
+		velocity.x += BUCKET_DASH_FORCE
 
 const MAX_SPEED = 300.0
 const JUMP_VELOCITY = -300.0
