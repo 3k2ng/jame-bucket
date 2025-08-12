@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://y7t23oijdij"]
 
-[ext_resource type="Script" uid="uid://cyogwueild81v" path="res://scripts/bucket.gd" id="2_4mj0c"]
-[ext_resource type="Texture2D" uid="uid://bl4bwv2c4qdjs" path="res://assets/bucket.png" id="2_axt1m"]
+[ext_resource type="Script" uid="uid://cyogwueild81v" path="res://scripts/bucket.gd" id="1_w4705"]
+[ext_resource type="Texture2D" uid="uid://bl4bwv2c4qdjs" path="res://assets/bucket.png" id="2_gubm5"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ojsi1"]
 friction = 71.45
@@ -15,11 +15,11 @@ radius = 21.0
 radius = 25.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j3v7k"]
-atlas = ExtResource("2_axt1m")
+atlas = ExtResource("2_gubm5")
 region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ox4ou"]
-atlas = ExtResource("2_axt1m")
+atlas = ExtResource("2_gubm5")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4mj0c"]
@@ -47,7 +47,7 @@ physics_material_override = SubResource("PhysicsMaterial_ojsi1")
 inertia = 10.0
 contact_monitor = true
 max_contacts_reported = 1
-script = ExtResource("2_4mj0c")
+script = ExtResource("1_w4705")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_qcheq")

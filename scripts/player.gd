@@ -34,10 +34,10 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
-const BUCKET_MAX_SPEED = 600.0
-const ACCEL = 800.0
-const BUCKET_JUMP_VELOCITY = -400.0
-const DOUBLE_JUMP_VELOCITY = -350.0
+const BUCKET_MAX_SPEED = 650.0
+const ACCEL = 1000.0
+const BUCKET_JUMP_VELOCITY = -500.0
+const DOUBLE_JUMP_VELOCITY = -400.0
 func handle_input(delta: float) -> void:
 	direction = Input.get_axis("left", "right")
 	facing = sign(direction) if sign(direction) else facing
@@ -61,24 +61,25 @@ func handle_on_bucket(delta: float) -> void:
 
 	velocity.x = move_toward(velocity.x, (direction if direction else 0.0) * BUCKET_MAX_SPEED, ACCEL * delta * (10.0 if sign(direction) != sign(velocity.x) else 1.0))
 
-const MAX_SPEED = 200.0
-const JUMP_VELOCITY = -200.0
-const GRAVITY = Vector2(0.0, 1000.0)
+const MAX_SPEED = 300.0
+const JUMP_VELOCITY = -300.0
+const DECEL = 300.0
 func handle_off_bucket(delta: float) -> void:
 	if not is_on_floor():
-		velocity += GRAVITY * delta
+		velocity += get_gravity() * delta
 
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 	if Input.is_action_just_released("jump") and not is_on_floor():
 		velocity.y = max(velocity.y, 0.0)
 
-	if abs(velocity.x) > MAX_SPEED:
-		velocity.x = move_toward(velocity.x, MAX_SPEED * (direction if direction else 0.0), ACCEL * delta)
-	else: velocity.x = MAX_SPEED * (direction if direction else 0.0)
+	if not is_on_floor() and sign(direction) == sign(velocity.x) and abs(velocity.x) > MAX_SPEED:
+		velocity.x = move_toward(velocity.x, MAX_SPEED * (direction if direction else 0.0), DECEL * delta)
+	else:
+		velocity.x = MAX_SPEED * (direction if direction else 0.0)
 
 
-const BUCKET = preload("res://scenes/bucket.tscn")
+const BUCKET = preload("res://scenes/objects/bucket.tscn")
 var BUCKET_FORCE = 1200.0
 var BUCKET_Y_FORCE = 1.5
 var BUCKET_Y_BASE = 50.0
@@ -92,10 +93,12 @@ func kick_bucket() -> void:
 	get_parent().add_child(new_bucket)
 	update_state(State.OFF_BUCKET)
 
+var BUCKET_DOUBLE_JUMP_X_FORCE = 600.0
+var BUCKET_DOUBLE_JUMP_Y_FORCE = 1200.0
 func double_jump() -> void:
 	if state == State.OFF_BUCKET: return
 	var new_bucket = BUCKET.instantiate()
-	new_bucket.linear_velocity = Vector2(sign(velocity.x) * 800.0, BUCKET_FORCE)
+	new_bucket.linear_velocity = Vector2(sign(velocity.x) * BUCKET_DOUBLE_JUMP_X_FORCE, BUCKET_DOUBLE_JUMP_Y_FORCE)
 	new_bucket.position = position + Vector2(0.0, 10.0)
 	get_parent().add_child(new_bucket)
 	update_state(State.OFF_BUCKET)
@@ -153,8 +156,8 @@ func handle_sprite(delta: float) -> void:
 			sprite.play("idle")
 
 	if state == State.ON_BUCKET:
-		sprite.position = Vector2(0.0, -26.0)
+		sprite.position = Vector2(0.0, -40.0)
 	else:
-		sprite.position = Vector2(0.0, 11.0)
+		sprite.position = Vector2(0.0, 2.0)
 
 	bucket_sprite_2d.rotation = bucket_angle

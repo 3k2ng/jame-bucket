@@ -6,7 +6,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qhqgy"]
 radius = 21.0
-height = 90.0
+height = 106.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j3v7k"]
 atlas = ExtResource("3_qhqgy")
@@ -123,6 +123,7 @@ collision_layer = 2
 script = ExtResource("1_g2els")
 
 [node name="OnCollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
 shape = SubResource("CapsuleShape2D_qhqgy")
 
 [node name="BucketSprite2D" type="AnimatedSprite2D" parent="."]
@@ -133,8 +134,8 @@ animation = &"roll"
 autoplay = "air"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -26)
-scale = Vector2(3, 3)
+position = Vector2(0, -40)
+scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_g2els")
 animation = &"run"
 autoplay = "idle"

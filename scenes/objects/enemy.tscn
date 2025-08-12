@@ -5,9 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://cghf51armhec4" path="res://assets/Kings and Pigs/03-Pig/Dead (34x28).png" id="2_5uy6h"]
 [ext_resource type="Texture2D" uid="uid://cyrcgs2uq5v85" path="res://assets/Kings and Pigs/03-Pig/Run (34x28).png" id="2_md0e3"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5uy6h"]
-size = Vector2(44, 44)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_w8i8w"]
 atlas = ExtResource("2_5uy6h")
 region = Rect2(0, 0, 34, 28)
@@ -110,6 +107,24 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5uy6h"]
+size = Vector2(74, 64)
+
+[sub_resource type="Animation" id="Animation_c4w8v"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteOrigin/AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_5uy6h"]
 resource_name = "die"
 length = 5.0
@@ -141,21 +156,6 @@ tracks/1/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_c4w8v"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("SpriteOrigin/AnimatedSprite2D:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c4w8v"]
 _data = {
 &"RESET": SubResource("Animation_c4w8v"),
@@ -166,17 +166,17 @@ _data = {
 collision_layer = 2
 script = ExtResource("1_md0e3")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_5uy6h")
-
 [node name="SpriteOrigin" type="Node2D" parent="."]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SpriteOrigin"]
-position = Vector2(-7, -11)
-scale = Vector2(2.42857, 2.42857)
+position = Vector2(-14, -22)
+scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_ipns3")
 animation = &"die"
 autoplay = "run"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_5uy6h")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
