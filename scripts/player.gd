@@ -68,7 +68,7 @@ func handle_on_bucket(delta: float) -> void:
 	if Input.is_action_just_pressed("dash"):
 		velocity.x += BUCKET_DASH_FORCE
 
-const MAX_SPEED = 300.0
+const MAX_SPEED = 250.0
 const JUMP_VELOCITY = -300.0
 const DECEL = 300.0
 func handle_off_bucket(delta: float) -> void:

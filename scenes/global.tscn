@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c21k65ck2yw3x"]
 
 [ext_resource type="Script" uid="uid://ccmvso780xuab" path="res://scripts/global.gd" id="1_4pk28"]
-[ext_resource type="PackedScene" uid="uid://c73gheaq05sma" path="res://scenes/levels/level.tscn" id="2_nmxvb"]
+[ext_resource type="PackedScene" uid="uid://1y14dgx6ieyv" path="res://scenes/levels/dungeon.tscn" id="2_nmxvb"]
 
 [node name="Global" type="Node"]
 script = ExtResource("1_4pk28")

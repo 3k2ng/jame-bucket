@@ -1,12 +1,25 @@
-[gd_scene load_steps=18 format=3 uid="uid://xq87myo26y5s"]
+[gd_scene load_steps=20 format=3 uid="uid://xq87myo26y5s"]
 
 [ext_resource type="Script" uid="uid://degk58c8w57h2" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://bvgwjxmvpxviq" path="res://assets/wizard.png" id="2_qhqgy"]
 [ext_resource type="Texture2D" uid="uid://bl4bwv2c4qdjs" path="res://assets/bucket.png" id="3_qhqgy"]
 
+[sub_resource type="Gradient" id="Gradient_h5uus"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.3837838, 0.74054056, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.46960902, 1, 1, 1, 0.11372549, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_54rde"]
+gradient = SubResource("Gradient_h5uus")
+width = 484
+height = 369
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qhqgy"]
 radius = 24.0
-height = 106.0
+height = 92.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j3v7k"]
 atlas = ExtResource("3_qhqgy")
@@ -116,14 +129,18 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g2els"]
 radius = 24.0
-height = 66.0
+height = 58.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_g2els")
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.15686275)
+texture = SubResource("GradientTexture2D_54rde")
+
 [node name="OnCollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -8)
+position = Vector2(0, -1)
 shape = SubResource("CapsuleShape2D_qhqgy")
 
 [node name="BucketSprite2D" type="AnimatedSprite2D" parent="."]
@@ -142,7 +159,7 @@ autoplay = "idle"
 frame_progress = 0.803012
 
 [node name="OffCollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 12)
+position = Vector2(0, 16)
 shape = SubResource("CapsuleShape2D_g2els")
 
 [node name="Camera2D" type="Camera2D" parent="."]
